@@ -6,6 +6,7 @@ import (
   "io/ioutil"
   "os"
   "./lib"
+  "time"
 )
 
 
@@ -44,10 +45,14 @@ func listGists(url string) {
       } else {
         for _,val := range json_res {
           fmt.Printf("%s\n", val.Html_url)
-          fmt.Printf("\t%s\n", val.Description)
+          fmt.Printf("(%s)\t%s\n", shortDate(val.Created_at), val.Description)
           fmt.Printf("\n")
         }
       }
     }
   }
+}
+
+func shortDate(date time.Time) string {
+  return date.Format("2006-01-02")
 }
