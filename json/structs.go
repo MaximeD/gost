@@ -1,4 +1,4 @@
-package GistTypes
+package JSONStruct
 
 import "time"
 
@@ -25,7 +25,7 @@ type User struct {
   Login string
   Id int64
   AvatarUrl string
-  GravatarId string // lkjj
+  GravatarId string
   Url string
   HtmlUrl string
   FollowersUrl string
@@ -39,6 +39,17 @@ type User struct {
   ReceivedEventsUrl string
   TypeUrl string
 }
+
+type Post struct {
+  Desc string `json:"description"`
+  Public bool `json:"public"`
+  Files map[string]File `json:"files"`
+}
+
+type File struct {
+  Content string `json:"content"`
+}
+
 
 type Files struct {
   //"http_response.coffee": {
