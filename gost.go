@@ -1,6 +1,7 @@
 package main
 import (
   "flag"
+  "github.com/MaximeD/gost/conf"
   "github.com/MaximeD/gost/gist"
 )
 
@@ -23,8 +24,8 @@ func main() {
     url := baseUrl + "users/" + username + "/gists"
     Gist.List(url)
   } else {
+    token := Configuration.GetToken()
     filesName := flag.Args()
-    /* common variables */
-    Gist.Post(baseUrl, filesName, *gistDescriptionFlag)
+    Gist.Post(baseUrl, token, filesName, *gistDescriptionFlag)
   }
 }

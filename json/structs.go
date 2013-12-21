@@ -59,3 +59,21 @@ type Files struct {
   //  "raw_url": "https://gist.github.com/raw/6163410/a3a11aa559da8bc0e40828742cf482f25a4a54c2/http_response.coffee",
   //  "size": 1113
 }
+
+type OAuth struct {
+  Scopes []string `json:"scopes"`
+  Note string `json:"note"`
+  NoteUrl string `json:"note_url"`
+}
+
+type OAuthAuthorizationResponse struct {
+  Id int
+  Url string
+  Scopes []string
+  Token string
+  App map[string]string
+  Note string
+  NoteUrl string
+  CreatedAt string
+  UpdatedAt string
+}

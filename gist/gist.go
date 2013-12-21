@@ -1,14 +1,15 @@
 package Gist
 
 import (
-  "fmt"
-  "time"
   "bytes"
   "encoding/json"
-  "net/http"
-  "io/ioutil"
+  "fmt"
   "github.com/MaximeD/gost/json"
+  "io/ioutil"
+  "net/http"
   "os"
+  "path"
+  "time"
 )
 
 func List(url string) {
@@ -41,16 +42,18 @@ func List(url string) {
   }
 }
 
-func Post(baseUrl string, filesName []string, description string) {
+func Post(baseUrl string, accessToken string, filesPath []string, description string) {
   files := make(map[string]JSONStruct.File)
 
-  for i:=0; i < len(filesName); i++ {
-    content, err := ioutil.ReadFile(filesName[i])
+  for i:=0; i < len(filesPath); i++ {
+    content, err := ioutil.ReadFile(filesPath[i])
     if err != nil {
       fmt.Printf("%s", err)
       os.Exit(1)
     }
-    files[filesName[i]] = JSONStruct.File{Content: string(content)}
+    // TODO take only path of file
+    fileName := path.Base(filesPath[i])
+    files[fileName] = JSONStruct.File{Content: string(content)}
   }
 
   gist := JSONStruct.Post{Desc: description, Public: true, Files: files}
@@ -63,7 +66,11 @@ func Post(baseUrl string, filesName []string, description string) {
   body := bytes.NewBuffer(buf)
 
   // post json
-  resp, err := http.Post(baseUrl + "gists", "text/json", body)
+  postUrl := baseUrl + "gists"
+  if accessToken != "" {
+    postUrl = postUrl + "?access_token=" + accessToken
+  }
+  resp, err := http.Post(postUrl, "text/json", body)
   if err != nil {
     fmt.Printf("%s", err)
     os.Exit(1)
