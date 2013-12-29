@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <title>Gost by MaximeD</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>Gost</h1>
+        <h2>A gist client in go</h2>
+
+        <section id="downloads">
+          <a href="https://github.com/MaximeD/gost/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/MaximeD/gost/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/MaximeD/gost" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h1>
+<a name="gost" class="anchor" href="#gost"><span class="octicon octicon-link"></span></a>Gost</h1>
+
+<p><em>The gist client in go</em></p>
+
+<p>Gost is a client for the gist API,
+it allows you to create and browse the gists of <a href="https://gist.github.com/">https://gist.github.com/</a>.</p>
+
+<h1>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h1>
+
+<p>Assuming you have golang:</p>
+
+<pre><code>go get github.com/MaximeD/gost
+</code></pre>
+
+<h1>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h1>
+
+<h2>
+<a name="create-gists" class="anchor" href="#create-gists"><span class="octicon octicon-link"></span></a>Create gists</h2>
+
+<pre><code>gost &lt;files name&gt;
+</code></pre>
+
+<p>You can supply as many files as you want here.</p>
+
+<p>Full example:</p>
+
+<pre><code>gost -p -d "rocking the casbah" fun.go love_gist.rb
+</code></pre>
+
+<p>will create a private gist with description "rocking the casbah"
+with two files <code>fun.go</code> and <code>love\_gist.rb</code></p>
+
+<h3>
+<a name="private-gists" class="anchor" href="#private-gists"><span class="octicon octicon-link"></span></a>Private gists</h3>
+
+<p>By default, your gists are public.
+If you want a private one, just add <code>-p</code> to your command.
+On first run, <code>gost</code> will create a prompt you for your credentials
+and store a token in it's configuration file,
+so that you will have to do this step only once.</p>
+
+<h3>
+<a name="description" class="anchor" href="#description"><span class="octicon octicon-link"></span></a>Description</h3>
+
+<p>To give your gist a description use <code>-d &lt;description&gt;</code></p>
+
+<h2>
+<a name="list-gists" class="anchor" href="#list-gists"><span class="octicon octicon-link"></span></a>List gists</h2>
+
+<p>You can list the gist of a user with the following:</p>
+
+<pre><code>gost -l &lt;username&gt;
+</code></pre>
+      </section>
+    </div>
+
+    
+  </body>
+</html>
