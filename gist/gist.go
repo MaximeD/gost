@@ -93,6 +93,29 @@ func Post(baseUrl string, accessToken string, isPublic bool, filesPath []string,
 	}
 }
 
+func Delete(baseUrl string, accessToken string, gistId string) {
+
+	deleteUrl := baseUrl + "gists/" + gistId
+	if accessToken != "" {
+		deleteUrl = deleteUrl + "?access_token=" + accessToken
+	}
+	req, err := http.NewRequest("DELETE", deleteUrl, nil)
+	// handle err
+	resp, err := http.DefaultClient.Do(req)
+	if err != nil {
+		fmt.Printf("%s", err)
+		os.Exit(1)
+	} else {
+		// close connexion
+		defer resp.Body.Close()
+		if resp.StatusCode == 204 {
+			fmt.Println("Gist deleted with success")
+		} else {
+			fmt.Printf("Could not find gist %s\n", gistId)
+		}
+	}
+}
+
 func shortDate(dateString string) string {
 	date, err := time.Parse("2006-01-02T15:04:05Z07:00", dateString)
 	if err != nil {
