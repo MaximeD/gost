@@ -42,7 +42,7 @@ func List(url string) {
   }
 }
 
-func Post(baseUrl string, accessToken string, filesPath []string, description string) {
+func Post(baseUrl string, accessToken string, isPublic bool, filesPath []string, description string) {
   files := make(map[string]JSONStruct.File)
 
   for i:=0; i < len(filesPath); i++ {
@@ -51,12 +51,11 @@ func Post(baseUrl string, accessToken string, filesPath []string, description st
       fmt.Printf("%s", err)
       os.Exit(1)
     }
-    // TODO take only path of file
     fileName := path.Base(filesPath[i])
     files[fileName] = JSONStruct.File{Content: string(content)}
   }
 
-  gist := JSONStruct.Post{Desc: description, Public: true, Files: files}
+  gist := JSONStruct.Post{Desc: description, Public: isPublic, Files: files}
 
   // encode json
   buf, err := json.Marshal(gist)
