@@ -54,3 +54,11 @@ You can list the gist of a user with the following:
 ```
 gost -l <username>
 ```
+
+## Delete a gist
+
+Given you have the id of one of your gist and the right to delete it, use `-D` flag:
+
+```
+gost -D <gist_id>
+```
