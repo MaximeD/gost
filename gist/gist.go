@@ -14,31 +14,30 @@ import (
 
 func List(url string) {
 	res, err := http.Get(url)
-
 	if err != nil {
 		fmt.Printf("%s", err)
 		os.Exit(1)
-	} else {
-		// close connexion
-		defer res.Body.Close()
-		body, err := ioutil.ReadAll(res.Body)
-		if err != nil {
-			fmt.Printf("%s", err)
-			os.Exit(1)
-		} else {
-			var json_res []GistJSON.Response
-			err := json.Unmarshal(body, &json_res)
-			if err != nil {
-				fmt.Printf("%s", err)
-				os.Exit(1)
-			} else {
-				for _, val := range json_res {
-					fmt.Printf("%s\n", val.Html_url)
-					fmt.Printf("(%s)\t%s\n", shortDate(val.Created_at), val.Description)
-					fmt.Printf("\n")
-				}
-			}
-		}
+	}
+
+	// close connexion
+	defer res.Body.Close()
+	body, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		fmt.Printf("%s", err)
+		os.Exit(1)
+	}
+
+	var jsonRes []GistJSON.Response
+	err = json.Unmarshal(body, &jsonRes)
+	if err != nil {
+		fmt.Printf("%s", err)
+		os.Exit(1)
+	}
+
+	for _, val := range jsonRes {
+		fmt.Printf("%s\n", val.Html_url)
+		fmt.Printf("(%s)\t%s\n", shortDate(val.Created_at), val.Description)
+		fmt.Printf("\n")
 	}
 }
 
@@ -62,35 +61,36 @@ func Post(baseUrl string, accessToken string, isPublic bool, filesPath []string,
 	if err != nil {
 		fmt.Printf("%s", err)
 	}
-	body := bytes.NewBuffer(buf)
+	jsonBody := bytes.NewBuffer(buf)
 
 	// post json
 	postUrl := baseUrl + "gists"
 	if accessToken != "" {
 		postUrl = postUrl + "?access_token=" + accessToken
 	}
-	resp, err := http.Post(postUrl, "text/json", body)
+
+	resp, err := http.Post(postUrl, "text/json", jsonBody)
 	if err != nil {
 		fmt.Printf("%s", err)
 		os.Exit(1)
-	} else {
-		// close connexion
-		defer resp.Body.Close()
-		body, err := ioutil.ReadAll(resp.Body)
-		if err != nil {
-			fmt.Printf("%s", err)
-			os.Exit(1)
-		} else {
-			var jsonRes GistJSON.Response
-			err := json.Unmarshal(body, &jsonRes)
-			if err != nil {
-				fmt.Printf("%s", err)
-				os.Exit(1)
-			} else {
-				fmt.Printf("%s\n", jsonRes.Html_url)
-			}
-		}
 	}
+
+	// close connexion
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		fmt.Printf("%s", err)
+		os.Exit(1)
+	}
+
+	var jsonRes GistJSON.Response
+	err = json.Unmarshal(body, &jsonRes)
+	if err != nil {
+		fmt.Printf("%s", err)
+		os.Exit(1)
+	}
+
+	fmt.Printf("%s\n", jsonRes.Html_url)
 }
 
 func Delete(baseUrl string, accessToken string, gistId string) {
@@ -105,14 +105,14 @@ func Delete(baseUrl string, accessToken string, gistId string) {
 	if err != nil {
 		fmt.Printf("%s", err)
 		os.Exit(1)
+	}
+
+	// close connexion
+	defer resp.Body.Close()
+	if resp.StatusCode == 204 {
+		fmt.Println("Gist deleted with success")
 	} else {
-		// close connexion
-		defer resp.Body.Close()
-		if resp.StatusCode == 204 {
-			fmt.Println("Gist deleted with success")
-		} else {
-			fmt.Printf("Could not find gist %s\n", gistId)
-		}
+		fmt.Printf("Could not find gist %s\n", gistId)
 	}
 }
 

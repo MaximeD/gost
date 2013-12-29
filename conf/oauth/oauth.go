@@ -22,11 +22,11 @@ func GetToken() (token string) {
 	if err != nil {
 		fmt.Printf("%s", err)
 	}
-	body := bytes.NewBuffer(buf)
+	jsonBody := bytes.NewBuffer(buf)
 
 	// create client to handle basic auth
 	client := &http.Client{}
-	req, err := http.NewRequest("POST", authorizationUrl, body)
+	req, err := http.NewRequest("POST", authorizationUrl, jsonBody)
 	username, password := getCredentials()
 	req.SetBasicAuth(username, password)
 
@@ -35,24 +35,24 @@ func GetToken() (token string) {
 	if err != nil {
 		fmt.Printf("%s", err)
 		os.Exit(1)
-	} else {
-		// close connexion
-		defer resp.Body.Close()
-		body, err := ioutil.ReadAll(resp.Body)
-		if err != nil {
-			fmt.Printf("%s", err)
-			os.Exit(1)
-		} else {
-			var jsonRes OAuthJSON.GetSingleAuthResponse
-			err := json.Unmarshal(body, &jsonRes)
-			if err != nil {
-				fmt.Printf("%s", err)
-				os.Exit(1)
-			} else {
-				token = jsonRes.Token
-			}
-		}
 	}
+
+	// close connexion
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		fmt.Printf("%s", err)
+		os.Exit(1)
+	}
+
+	var jsonRes OAuthJSON.GetSingleAuthResponse
+	err = json.Unmarshal(body, &jsonRes)
+	if err != nil {
+		fmt.Printf("%s", err)
+		os.Exit(1)
+	}
+
+	token = jsonRes.Token
 	return token
 }
 
