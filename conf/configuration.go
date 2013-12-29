@@ -21,10 +21,8 @@ func readConf() (token string) {
 		// file does not exist
 		createConfigurationFile()
 		return string(readConf())
-	} else {
-		return string(file)
 	}
-	return ""
+	return string(file)
 }
 
 func createConfigurationFile() {
