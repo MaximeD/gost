@@ -53,4 +53,10 @@ type FileDetails struct {
 	Language string
 	RawUrl   string
 	Size     int
+  Content  string
+}
+
+type MessageResponse struct {
+  Message string
+  DocumentationUrl string
 }
