@@ -116,10 +116,61 @@ func Delete(baseUrl string, accessToken string, gistId string) {
 	}
 }
 
+func Download(baseUrl string, accessToken string, gistId string) {
+
+	downloadUrl := baseUrl + "gists/" + gistId
+	if accessToken != "" {
+		downloadUrl = downloadUrl + "?access_token=" + accessToken
+	}
+	res, err := http.Get(downloadUrl)
+	if err != nil {
+		fmt.Printf("%s", err)
+		os.Exit(1)
+	}
+
+	// close connexion
+	defer res.Body.Close()
+  if res.StatusCode != 200 {
+    printErrorMessage(res)
+		os.Exit(1)
+  }
+
+	body, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		fmt.Printf("%s", err)
+		os.Exit(1)
+	}
+
+	var jsonRes GistJSON.Response
+	err = json.Unmarshal(body, &jsonRes)
+	if err != nil {
+		fmt.Printf("%s", err)
+		os.Exit(1)
+	}
+
+	for _, file := range jsonRes.Files {
+    fmt.Printf("Downloading %s\n", file.FileName)
+	  ioutil.WriteFile(file.FileName, []byte(file.Content), 0660)
+	}
+}
+
+
 func shortDate(dateString string) string {
 	date, err := time.Parse("2006-01-02T15:04:05Z07:00", dateString)
 	if err != nil {
 		fmt.Println(err)
 	}
 	return date.Format("2006-01-02")
+}
+
+func printErrorMessage(resp *http.Response) {
+	var jsonRes GistJSON.MessageResponse
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		fmt.Printf("%s", err)
+		os.Exit(1)
+	}
+
+  err = json.Unmarshal(body, &jsonRes)
+  fmt.Printf("Sorry, %s\n", jsonRes.Message)
 }
