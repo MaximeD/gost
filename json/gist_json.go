@@ -1,40 +1,40 @@
 package GistJSON
 
 type Response struct {
-	Url          string
-	Forks_url    string
-	Commits_url  string
-	Id           string
-	Git_pull_url string
-	Git_push_url string
-	Html_url     string
-	Files        map[string]FileDetails
-	Public       bool
-	Created_at   string
-	Updated_at   string
-	Description  string
-	Comments     int
-	User         User
-	Comments_url string
+	Url         string                 `json:"url"`
+	ForksUrl    string                 `json:"forks_url"`
+	CommitsUrl  string                 `json:"commits_url"`
+	Id          string                 `json:"id"`
+	GitPullUrl  string                 `json:"git_pull_url"`
+	GitPushUrl  string                 `json:"git_push_url"`
+	HtmlUrl     string                 `json:"html_url"`
+	Files       map[string]FileDetails `json:"files"`
+	Public      bool                   `json:"public"`
+	CreatedAt   string                 `json:"created_at"`
+	UpdatedAt   string                 `json:"updated_at"`
+	Description string                 `json:"description"`
+	Comments    int                    `json:"comments"`
+	User        User                   `json:"user"`
+	CommentsUrl string                 `json:"comments_url"`
 }
 
 type User struct {
-	Login             string
-	Id                int64
-	AvatarUrl         string
-	GravatarId        string
-	Url               string
-	HtmlUrl           string
-	FollowersUrl      string
-	FollowingUrl      string
-	GistsUrl          string
-	StarredUrl        string
-	SubscriptionsUrl  string
-	OrganizationsUrl  string
-	ReposUrl          string
-	EventsUrl         string
-	ReceivedEventsUrl string
-	TypeUrl           string
+	Login             string `json:"login"`
+	Id                int64  `json:"id"`
+	AvatarUrl         string `json:"avatar_url"`
+	GravatarId        string `json:"gravatar_id"`
+	Url               string `json:"url"`
+	HtmlUrl           string `json:"html_url"`
+	FollowersUrl      string `json:"followers_url"`
+	FollowingUrl      string `json:"followings_url"`
+	GistsUrl          string `json:"gists_url"`
+	StarredUrl        string `json:"starred_url"`
+	SubscriptionsUrl  string `json:"subscriptions_url"`
+	OrganizationsUrl  string `json:"organizations_url"`
+	ReposUrl          string `json:"repos_url"`
+	EventsUrl         string `json:"events_url"`
+	ReceivedEventsUrl string `json:"received_events_url"`
+	TypeUrl           string `json:"type_url"`
 }
 
 type Post struct {
@@ -48,15 +48,15 @@ type File struct {
 }
 
 type FileDetails struct {
-	FileName string
-	Type     string
-	Language string
-	RawUrl   string
-	Size     int
-  Content  string
+	FileName string `json:"file_name"`
+	Type     string `json:"type"`
+	Language string `json:"language"`
+	RawUrl   string `json:"raw_url"`
+	Size     int    `json:"size"`
+	Content  string `json:"content"`
 }
 
 type MessageResponse struct {
-  Message string
-  DocumentationUrl string
+	Message          string `json:"message"`
+	DocumentationUrl string `json:"documentation_url"`
 }
