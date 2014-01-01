@@ -35,8 +35,8 @@ func List(url string) {
 	}
 
 	for _, val := range jsonRes {
-		fmt.Printf("%s\n", val.Html_url)
-		fmt.Printf("(%s)\t%s\n", shortDate(val.Created_at), val.Description)
+		fmt.Printf("%s\n", val.HtmlUrl)
+		fmt.Printf("(%s)\t%s\n", shortDate(val.CreatedAt), val.Description)
 		fmt.Printf("\n")
 	}
 }
@@ -90,7 +90,7 @@ func Post(baseUrl string, accessToken string, isPublic bool, filesPath []string,
 		os.Exit(1)
 	}
 
-	fmt.Printf("%s\n", jsonRes.Html_url)
+	fmt.Printf("%s\n", jsonRes.HtmlUrl)
 }
 
 func Delete(baseUrl string, accessToken string, gistId string) {
@@ -130,10 +130,10 @@ func Download(baseUrl string, accessToken string, gistId string) {
 
 	// close connexion
 	defer res.Body.Close()
-  if res.StatusCode != 200 {
-    printErrorMessage(res)
+	if res.StatusCode != 200 {
+		printErrorMessage(res)
 		os.Exit(1)
-  }
+	}
 
 	body, err := ioutil.ReadAll(res.Body)
 	if err != nil {
@@ -149,11 +149,10 @@ func Download(baseUrl string, accessToken string, gistId string) {
 	}
 
 	for _, file := range jsonRes.Files {
-    fmt.Printf("Downloading %s\n", file.FileName)
-	  ioutil.WriteFile(file.FileName, []byte(file.Content), 0660)
+		fmt.Printf("Downloading %s\n", file.FileName)
+		ioutil.WriteFile(file.FileName, []byte(file.Content), 0660)
 	}
 }
-
 
 func shortDate(dateString string) string {
 	date, err := time.Parse("2006-01-02T15:04:05Z07:00", dateString)
@@ -171,6 +170,6 @@ func printErrorMessage(resp *http.Response) {
 		os.Exit(1)
 	}
 
-  err = json.Unmarshal(body, &jsonRes)
-  fmt.Printf("Sorry, %s\n", jsonRes.Message)
+	err = json.Unmarshal(body, &jsonRes)
+	fmt.Printf("Sorry, %s\n", jsonRes.Message)
 }
