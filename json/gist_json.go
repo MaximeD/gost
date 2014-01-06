@@ -48,7 +48,7 @@ type File struct {
 }
 
 type FileDetails struct {
-	FileName string `json:"file_name"`
+	FileName string `json:"filename"`
 	Type     string `json:"type"`
 	Language string `json:"language"`
 	RawUrl   string `json:"raw_url"`
