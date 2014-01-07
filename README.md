@@ -47,6 +47,21 @@ so that you will have to do this step only once.
 To give your gist a description use `-d <description>`
 
 
+## Update gist
+
+To update a gist:
+
+```
+gost -u <gist_id> <files name>
+```
+
+You can supply an optional `-d` flag to update the description of your gist.
+
+```
+gost -u <gist_id> -d <new description> <files name>
+```
+
+
 ## List gists
 
 You can list the gist of a user with the following:

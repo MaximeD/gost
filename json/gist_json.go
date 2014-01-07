@@ -16,6 +16,7 @@ type Response struct {
 	Comments    int                    `json:"comments"`
 	User        User                   `json:"user"`
 	CommentsUrl string                 `json:"comments_url"`
+	History     []History              `json:"history"`
 }
 
 type User struct {
@@ -43,6 +44,11 @@ type Post struct {
 	Files  map[string]File `json:"files"`
 }
 
+type Patch struct {
+	Desc  string          `json:"description"`
+	Files map[string]File `json:"files"`
+}
+
 type File struct {
 	Content string `json:"content"`
 }
@@ -54,6 +60,20 @@ type FileDetails struct {
 	RawUrl   string `json:"raw_url"`
 	Size     int    `json:"size"`
 	Content  string `json:"content"`
+}
+
+type History struct {
+	Url          string       `json:"url"`
+	Version      string       `json:"version"`
+	User         User         `json:"user"`
+	ChangeStatus ChangeStatus `json:"change_status"`
+	CommittedAt  string       `json:"committed_at"`
+}
+
+type ChangeStatus struct {
+	Deletions int `json:"deletions"`
+	Additions int `json:"additions"`
+	Total     int `json:"total"`
 }
 
 type MessageResponse struct {

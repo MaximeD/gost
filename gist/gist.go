@@ -93,6 +93,75 @@ func Post(baseUrl string, accessToken string, isPublic bool, filesPath []string,
 	fmt.Printf("%s\n", jsonRes.HtmlUrl)
 }
 
+func Update(baseUrl string, accessToken string, filesPath []string, gistId string, description string) {
+	files := make(map[string]GistJSON.File)
+
+	for i := 0; i < len(filesPath); i++ {
+		content, err := ioutil.ReadFile(filesPath[i])
+		if err != nil {
+			fmt.Printf("%s\n", err)
+			os.Exit(1)
+		}
+		fileName := path.Base(filesPath[i])
+		files[fileName] = GistJSON.File{Content: string(content)}
+	}
+
+	gist := GistJSON.Patch{Desc: description, Files: files}
+
+	// encode json
+	buf, err := json.Marshal(gist)
+	if err != nil {
+		fmt.Printf("%s\n", err)
+	}
+	jsonBody := bytes.NewBuffer(buf)
+
+	// post json
+	postUrl := baseUrl + "gists/" + gistId
+	if accessToken != "" {
+		postUrl = postUrl + "?access_token=" + accessToken
+	}
+
+	req, err := http.NewRequest("PATCH", postUrl, jsonBody)
+	// handle err
+	resp, err := http.DefaultClient.Do(req)
+	defer resp.Body.Close()
+	if err != nil {
+		fmt.Printf("%s\n", err)
+		os.Exit(1)
+	}
+
+	// close connexion
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		fmt.Printf("%s\n", err)
+		os.Exit(1)
+	}
+
+	var jsonErrorMessage GistJSON.MessageResponse
+	err = json.Unmarshal(body, &jsonErrorMessage)
+	if err != nil {
+		fmt.Printf("%s\n", err)
+		os.Exit(1)
+	}
+	if jsonErrorMessage.Message != "" {
+		fmt.Printf("%s\n", jsonErrorMessage.Message)
+		os.Exit(1)
+	}
+
+	var jsonRes GistJSON.Response
+	err = json.Unmarshal(body, &jsonRes)
+	if err != nil {
+		fmt.Printf("%s\n", err)
+		os.Exit(1)
+	}
+
+	fmt.Printf("%s\n", jsonRes.HtmlUrl)
+	revisionCount := len(jsonRes.History)
+	lastHistoryStatus := jsonRes.History[0].ChangeStatus
+	fmt.Printf("Revision %d (%d additions & %d deletions)\n", revisionCount, lastHistoryStatus.Deletions, lastHistoryStatus.Additions)
+}
+
 func Delete(baseUrl string, accessToken string, gistId string) {
 
 	deleteUrl := baseUrl + "gists/" + gistId
