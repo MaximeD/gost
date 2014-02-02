@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/MaximeD/gost/json"
+	"github.com/MaximeD/gost/utils"
 	"io/ioutil"
 	"net/http"
 	"os"
@@ -90,6 +91,10 @@ func Post(baseUrl string, accessToken string, isPublic bool, filesPath []string,
 		os.Exit(1)
 	}
 
+  // copy url to clipboard
+  Utils.Copy(jsonRes.HtmlUrl)
+
+  // display result
 	fmt.Printf("%s\n", jsonRes.HtmlUrl)
 }
 
@@ -155,6 +160,9 @@ func Update(baseUrl string, accessToken string, filesPath []string, gistId strin
 		fmt.Printf("%s\n", err)
 		os.Exit(1)
 	}
+
+  // copy url to clipboard
+  Utils.Copy(jsonRes.HtmlUrl)
 
 	fmt.Printf("%s\n", jsonRes.HtmlUrl)
 	revisionCount := len(jsonRes.History)

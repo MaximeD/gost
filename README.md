@@ -31,7 +31,8 @@ gost -p -d "rocking the casbah" fun.go love_gist.rb
 ```
 
 will create a private gist with description "rocking the casbah"
-with two files `fun.go` and `love_gist.rb`
+with two files `fun.go` and `love_gist.rb`.
+The resulting url will be copy to your clipboard.
 
 
 ### Private gists
