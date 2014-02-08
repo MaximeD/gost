@@ -50,7 +50,7 @@ To give your gist a description use `-d <description>`.
 
 #### Open result in browser
 
-To have your browser auto open on the url, user the flag `-o`.
+To have your browser auto open on the url, use the flag `-o`.
 (It will rely on `xdg-open`).
 
 
