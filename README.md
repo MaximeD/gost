@@ -34,8 +34,9 @@ will create a private gist with description "rocking the casbah"
 with two files `fun.go` and `love_gist.rb`.
 The resulting url will be copy to your clipboard.
 
+### Command line options
 
-### Private gists
+#### Private gists
 
 By default, your gists are public.
 If you want a private one, just add `-p` to your command.
@@ -43,9 +44,14 @@ On first run, `gost` will create a prompt you for your credentials
 and store a token in it's configuration file,
 so that you will have to do this step only once.
 
-### Description
+#### Description
 
-To give your gist a description use `-d <description>`
+To give your gist a description use `-d <description>`.
+
+#### Open result in browser
+
+To have your browser auto open on the url, user the flag `-o`.
+(It will rely on `xdg-open`).
 
 
 ## Update gist
