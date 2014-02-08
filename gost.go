@@ -16,10 +16,12 @@ var downloadGistFlag = flag.String("get", "", "Get a single gist")
 var gistDescriptionFlag = flag.String("description", "", "Description of the gist")
 var gistPrivateFlag = flag.Bool("private", false, "Set gist to private")
 var listGistsFlag = flag.String("list", "", "List gists for a user")
+var openBrowserFlag = flag.Bool("open", false, "Open result in browser")
 var updateGistFlag = flag.String("update", "", "Update an existing gist")
 
 func init() {
 	flag.BoolVar(gistPrivateFlag, "p", false, "Set gist to private")
+	flag.BoolVar(openBrowserFlag, "o", false, "Open result in browser")
 	flag.StringVar(deleteGistFlag, "D", "", "Delete a gist")
 	flag.StringVar(downloadGistFlag, "g", "", "Get a single gist")
 	flag.StringVar(gistDescriptionFlag, "d", "", "Description of the gist")
@@ -56,9 +58,9 @@ func main() {
 			os.Exit(2)
 		}
 		if *updateGistFlag != "" {
-			Gist.Update(baseUrl, token, filesName, *updateGistFlag, *gistDescriptionFlag)
+			Gist.Update(baseUrl, token, filesName, *updateGistFlag, *gistDescriptionFlag, *openBrowserFlag)
 		} else {
-			Gist.Post(baseUrl, token, isPublic, filesName, *gistDescriptionFlag)
+			Gist.Post(baseUrl, token, isPublic, filesName, *gistDescriptionFlag, *openBrowserFlag)
 		}
 	}
 }

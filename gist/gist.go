@@ -42,7 +42,7 @@ func List(url string) {
 	}
 }
 
-func Post(baseUrl string, accessToken string, isPublic bool, filesPath []string, description string) {
+func Post(baseUrl string, accessToken string, isPublic bool, filesPath []string, description string, openBrowser bool) {
 	files := make(map[string]GistJSON.File)
 
 	for i := 0; i < len(filesPath); i++ {
@@ -91,14 +91,18 @@ func Post(baseUrl string, accessToken string, isPublic bool, filesPath []string,
 		os.Exit(1)
 	}
 
-  // copy url to clipboard
-  Utils.Copy(jsonRes.HtmlUrl)
+	// copy url to clipboard
+	Utils.Copy(jsonRes.HtmlUrl)
 
-  // display result
+	if openBrowser {
+		Utils.OpenBrowser(jsonRes.HtmlUrl)
+	}
+
+	// display result
 	fmt.Printf("%s\n", jsonRes.HtmlUrl)
 }
 
-func Update(baseUrl string, accessToken string, filesPath []string, gistId string, description string) {
+func Update(baseUrl string, accessToken string, filesPath []string, gistId string, description string, openBrowser bool) {
 	files := make(map[string]GistJSON.File)
 
 	for i := 0; i < len(filesPath); i++ {
@@ -161,13 +165,17 @@ func Update(baseUrl string, accessToken string, filesPath []string, gistId strin
 		os.Exit(1)
 	}
 
-  // copy url to clipboard
-  Utils.Copy(jsonRes.HtmlUrl)
+	// copy url to clipboard
+	Utils.Copy(jsonRes.HtmlUrl)
 
 	fmt.Printf("%s\n", jsonRes.HtmlUrl)
 	revisionCount := len(jsonRes.History)
 	lastHistoryStatus := jsonRes.History[0].ChangeStatus
 	fmt.Printf("Revision %d (%d additions & %d deletions)\n", revisionCount, lastHistoryStatus.Deletions, lastHistoryStatus.Additions)
+
+	if openBrowser {
+		Utils.OpenBrowser(jsonRes.HtmlUrl)
+	}
 }
 
 func Delete(baseUrl string, accessToken string, gistId string) {
