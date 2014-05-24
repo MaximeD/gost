@@ -10,6 +10,7 @@ import (
 	"net/http"
 	"os"
 	"path"
+	"strings"
 	"time"
 )
 
@@ -178,7 +179,17 @@ func Update(baseUrl string, accessToken string, filesPath []string, gistId strin
 	}
 }
 
-func Delete(baseUrl string, accessToken string, gistId string) {
+func Delete(baseUrl string, accessToken string, gist string) {
+
+	/*
+	   gist can be send under form
+	     https://gist.github.com/a2a510376da5ffcb93f9
+	   or
+	     a2a510376da5ffcb93f9
+	   split on '/' to retreive only id
+	*/
+	splitted := strings.Split(gist, "/")
+	gistId := splitted[len(splitted)-1]
 
 	deleteUrl := baseUrl + "gists/" + gistId
 	if accessToken != "" {
