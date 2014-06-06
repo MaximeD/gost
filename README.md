@@ -59,13 +59,13 @@ To have your browser auto open on the url, use the flag `-o`.
 To update a gist:
 
 ```
-gost -u <gist_id> <files name>
+gost -u <gist_id_or_url> <files name>
 ```
 
 You can supply an optional `-d` flag to update the description of your gist.
 
 ```
-gost -u <gist_id> -d <new description> <files name>
+gost -u <gist_id_or_url> -d <new description> <files name>
 ```
 
 
@@ -80,7 +80,7 @@ gost -l <username>
 ## Download a gist
 
 ```
-gost -g <gist_id>
+gost -g <gist_id_or_url>
 ```
 
 ## Delete a gist
@@ -88,5 +88,5 @@ gost -g <gist_id>
 Given you have the id of one of your gist and the right to delete it, use `-D` flag:
 
 ```
-gost -D <gist_id>
+gost -D <gist_id_or_url>
 ```

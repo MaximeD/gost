@@ -103,7 +103,7 @@ func Post(baseUrl string, accessToken string, isPublic bool, filesPath []string,
 	fmt.Printf("%s\n", jsonRes.HtmlUrl)
 }
 
-func Update(baseUrl string, accessToken string, filesPath []string, gistId string, description string, openBrowser bool) {
+func Update(baseUrl string, accessToken string, filesPath []string, gistUrl string, description string, openBrowser bool) {
 	files := make(map[string]GistJSON.File)
 
 	for i := 0; i < len(filesPath); i++ {
@@ -124,6 +124,8 @@ func Update(baseUrl string, accessToken string, filesPath []string, gistId strin
 		fmt.Printf("%s\n", err)
 	}
 	jsonBody := bytes.NewBuffer(buf)
+
+	gistId := getGistId(gistUrl)
 
 	// post json
 	postUrl := baseUrl + "gists/" + gistId
@@ -179,17 +181,9 @@ func Update(baseUrl string, accessToken string, filesPath []string, gistId strin
 	}
 }
 
-func Delete(baseUrl string, accessToken string, gist string) {
+func Delete(baseUrl string, accessToken string, gistUrl string) {
 
-	/*
-	   gist can be send under form
-	     https://gist.github.com/a2a510376da5ffcb93f9
-	   or
-	     a2a510376da5ffcb93f9
-	   split on '/' to retreive only id
-	*/
-	splitted := strings.Split(gist, "/")
-	gistId := splitted[len(splitted)-1]
+	gistId := getGistId(gistUrl)
 
 	deleteUrl := baseUrl + "gists/" + gistId
 	if accessToken != "" {
@@ -212,7 +206,9 @@ func Delete(baseUrl string, accessToken string, gist string) {
 	}
 }
 
-func Download(baseUrl string, accessToken string, gistId string) {
+func Download(baseUrl string, accessToken string, gistUrl string) {
+
+	gistId := getGistId(gistUrl)
 
 	downloadUrl := baseUrl + "gists/" + gistId
 	if accessToken != "" {
@@ -256,6 +252,18 @@ func shortDate(dateString string) string {
 		fmt.Println(err)
 	}
 	return date.Format("2006-01-02")
+}
+
+func getGistId(urlOrId string) string {
+	/*
+	    accepted gist format are full url:
+		     https://gist.github.com/a2a510376da5ffcb93f9
+		  or just id
+		     a2a510376da5ffcb93f9
+		   split on '/' to retreive only id
+	*/
+	splitted := strings.Split(urlOrId, "/")
+	return splitted[len(splitted)-1]
 }
 
 func printErrorMessage(resp *http.Response) {
