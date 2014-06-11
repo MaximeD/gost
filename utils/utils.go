@@ -3,6 +3,7 @@ package Utils
 import (
 	"os"
 	"os/exec"
+	"runtime"
 )
 
 func Copy(url string) {
@@ -23,6 +24,13 @@ func Copy(url string) {
 }
 
 func OpenBrowser(url string) {
-	cmd := exec.Command("xdg-open", url)
-	cmd.Start()
+        os := runtime.GOOS
+        switch {
+        case os == "windows":
+                exec.Command("cmd", "/c", "start", url).Run()
+        case os == "darwin":
+                exec.Command("open", url).Run()
+        case os == "linux":
+                exec.Command("xdg-open", url).Run()
+        }
 }
