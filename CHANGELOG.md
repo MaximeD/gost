@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 0.4.0 (2015/01/25)
+
+Bugfix :
+
+* FIX opening browser on multiple OS (thanx @ramtiga)
+* ALLOW creating multiple tokens
+
+
 ## 0.3.0 (2014/06/06)
 
 New functionalities:
