@@ -7,11 +7,16 @@ it allows you to create and browse the gists of [https://gist.github.com/](https
 
 # Installation
 
-Assuming you have golang:
+You can grab a binary for your platform on the
+[releases page](https://github.com/MaximeD/gost/releases).
+
+
+Or else, you can install it from sources:
 
 ```
 go get github.com/MaximeD/gost
 ```
+
 
 # Usage
 
