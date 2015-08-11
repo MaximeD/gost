@@ -14,7 +14,14 @@ import (
 	"time"
 )
 
-func List(url string) {
+/*
+ * Show all gists for a user.
+ */
+func List(url string, accessToken string) {
+	if accessToken != "" {
+		url = url + "?access_token=" + accessToken
+	}
+
 	res, err := http.Get(url)
 	if err != nil {
 		fmt.Printf("%s", err)
@@ -256,11 +263,11 @@ func shortDate(dateString string) string {
 
 func getGistId(urlOrId string) string {
 	/*
-	    accepted gist format are full url:
-		     https://gist.github.com/a2a510376da5ffcb93f9
-		  or just id
-		     a2a510376da5ffcb93f9
-		   split on '/' to retreive only id
+		    accepted gist format are full url:
+			     https://gist.github.com/a2a510376da5ffcb93f9
+			  or just id
+			     a2a510376da5ffcb93f9
+			   split on '/' to retreive only id
 	*/
 	splitted := strings.Split(urlOrId, "/")
 	return splitted[len(splitted)-1]
