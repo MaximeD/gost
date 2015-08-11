@@ -33,7 +33,7 @@ func main() {
 	flag.Parse()
 	isPublic := !*gistPrivateFlag
 
-	// if nothing was given write message
+	// if nothing was given, display help
 	if (flag.NFlag() == 0) && (len(flag.Args()) == 0) {
 		fmt.Println("No arguments or files given!")
 		fmt.Fprintf(os.Stderr, "Usage of %s:\n", os.Args[0])
@@ -46,7 +46,7 @@ func main() {
 	if *listGistsFlag != "" {
 		username := *listGistsFlag
 		url := baseUrl + "users/" + username + "/gists"
-		Gist.List(url)
+		Gist.List(url, token)
 	} else if *deleteGistFlag != "" {
 		Gist.Delete(baseUrl, token, *deleteGistFlag)
 	} else if *downloadGistFlag != "" {
