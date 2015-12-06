@@ -1,8 +1,18 @@
 # CHANGELOG
 
+## 0.5.0 (2015/12/06)
+
+Refactor:
+* listing your own gists will show both public and private
+* refactor clipboard operations (thanks @erikh)
+
+Bugfix:
+* FIX copy command on OSX (thanks @erikh)
+
+
 ## 0.4.0 (2015/01/25)
 
-Bugfix :
+Bugfix:
 
 * FIX opening browser on multiple OS (thanx @ramtiga)
 * ALLOW creating multiple tokens
@@ -44,4 +54,3 @@ First release!
 * Post gists
 
 * Read a user gists
-
